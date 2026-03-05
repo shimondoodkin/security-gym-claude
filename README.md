@@ -1,10 +1,24 @@
 # Security Gym
 
-A markdown-first framework for evaluating whether LLM agents can find logic and flow vulnerabilities in programs — not just memory bugs or static analysis findings, but exploitable sequences of operations that developers never anticipated.
+**Can an LLM think like a security researcher?**
 
-## Thesis
+The conventional wisdom says no. LLMs can spot buffer overflows and SQL injections — pattern-matching on known vulnerability classes. But real security research isn't pattern matching. It's discovering that *a specific sequence of perfectly valid operations*, none of them buggy on their own, combine to create an exploit path the developer never imagined. It's reasoning about state, trust boundaries, and the gap between what code *checks* and what it *assumes*.
 
-There is an argument that LLMs cannot function as security researchers because they can only find surface-level issues (buffer overflows, SQL injection, etc.) through pattern matching. Security Gym exists to disprove this by providing structured challenges where the vulnerability is an **unintended combination of individually-correct operations** — the kind of finding that requires reasoning about program state, trust boundaries, and operational side-effects.
+Security Gym is a controlled experiment to challenge that assumption. It provides programs with deliberately hidden logic-chain vulnerabilities — flags that can only be captured by finding an unintended flow through 2, 3, or 5 operations that individually look correct. No memory corruption. No classic OWASP patterns. Just logic, state, and emergent misbehavior.
+
+If an LLM agent can systematically find these, it changes what "AI-assisted security" means.
+
+## Why This Matters
+
+Most security tools — static analyzers, fuzzers, SAST/DAST scanners — excel at finding *known vulnerability patterns*. They struggle with **logic vulnerabilities**: the export function that leaks internal metadata, the import function that trusts it, and the admin gate that now opens. Each function passes every scanner. The bug exists only in the *sequence*.
+
+Human security researchers find these through intuition built over years. The question is whether an LLM, given the right methodology, can do the same — not by guessing, but by **systematically mapping what each operation reads, writes, checks, and assumes**, then finding the "coincidences" where one operation's side-effects break another's assumptions.
+
+Security Gym provides:
+- **Structured challenges** with hidden exploit chains (1-5 steps)
+- **A repeatable methodology** (Capability Coincidence Analysis) that decomposes the problem into phases an LLM can execute
+- **Two difficulty levels** — source code analysis and reverse engineering from disassembly
+- **A learning memory** that accumulates insights across runs, improving over time
 
 ## How It Works
 
